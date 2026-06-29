@@ -12,6 +12,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/AndroidBuildTool.dir/main.cpp.o.d"
   "CMakeFiles/AndroidBuildTool.dir/mainwindow.cpp.o"
   "CMakeFiles/AndroidBuildTool.dir/mainwindow.cpp.o.d"
+  "CMakeFiles/AndroidBuildTool.dir/savesystem.cpp.o"
+  "CMakeFiles/AndroidBuildTool.dir/savesystem.cpp.o.d"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -227,6 +227,30 @@ mainwindow.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/AndroidBuildTool.dir/build.make CMakeFiles/AndroidBuildTool.dir/mainwindow.cpp.s
 .PHONY : mainwindow.cpp.s
 
+savesystem.o: savesystem.cpp.o
+.PHONY : savesystem.o
+
+# target to build an object file
+savesystem.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AndroidBuildTool.dir/build.make CMakeFiles/AndroidBuildTool.dir/savesystem.cpp.o
+.PHONY : savesystem.cpp.o
+
+savesystem.i: savesystem.cpp.i
+.PHONY : savesystem.i
+
+# target to preprocess a source file
+savesystem.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AndroidBuildTool.dir/build.make CMakeFiles/AndroidBuildTool.dir/savesystem.cpp.i
+.PHONY : savesystem.cpp.i
+
+savesystem.s: savesystem.cpp.s
+.PHONY : savesystem.s
+
+# target to generate assembly for a file
+savesystem.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AndroidBuildTool.dir/build.make CMakeFiles/AndroidBuildTool.dir/savesystem.cpp.s
+.PHONY : savesystem.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -247,6 +271,9 @@ help:
 	@echo "... mainwindow.o"
 	@echo "... mainwindow.i"
 	@echo "... mainwindow.s"
+	@echo "... savesystem.o"
+	@echo "... savesystem.i"
+	@echo "... savesystem.s"
 .PHONY : help
 
 

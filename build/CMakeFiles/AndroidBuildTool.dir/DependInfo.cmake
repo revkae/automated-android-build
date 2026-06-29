@@ -12,6 +12,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/ravan/Documents/bash/automated-android-build/build/AndroidBuildTool_autogen/mocs_compilation.cpp" "CMakeFiles/AndroidBuildTool.dir/AndroidBuildTool_autogen/mocs_compilation.cpp.o" "gcc" "CMakeFiles/AndroidBuildTool.dir/AndroidBuildTool_autogen/mocs_compilation.cpp.o.d"
   "/Users/ravan/Documents/bash/automated-android-build/main.cpp" "CMakeFiles/AndroidBuildTool.dir/main.cpp.o" "gcc" "CMakeFiles/AndroidBuildTool.dir/main.cpp.o.d"
   "/Users/ravan/Documents/bash/automated-android-build/mainwindow.cpp" "CMakeFiles/AndroidBuildTool.dir/mainwindow.cpp.o" "gcc" "CMakeFiles/AndroidBuildTool.dir/mainwindow.cpp.o.d"
+  "/Users/ravan/Documents/bash/automated-android-build/savesystem.cpp" "CMakeFiles/AndroidBuildTool.dir/savesystem.cpp.o" "gcc" "CMakeFiles/AndroidBuildTool.dir/savesystem.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

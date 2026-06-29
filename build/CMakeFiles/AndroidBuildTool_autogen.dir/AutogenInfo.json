@@ -421,6 +421,12 @@
 			"MU",
 			"EWIEGA46WW/moc_mainwindow.cpp",
 			null
+		],
+		[
+			"/Users/ravan/Documents/bash/automated-android-build/savesystem.h",
+			"MU",
+			"EWIEGA46WW/moc_savesystem.cpp",
+			null
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
@@ -491,6 +497,11 @@
 		],
 		[
 			"/Users/ravan/Documents/bash/automated-android-build/mainwindow.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/ravan/Documents/bash/automated-android-build/savesystem.cpp",
 			"MU",
 			null
 		]
