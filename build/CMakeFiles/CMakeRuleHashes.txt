@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+9c9e803797a189a1a5e46b969f5ee3da AndroidBuildTool_autogen/timestamp
+3702823f99cc5d967e43b8a4cbd79385 CMakeFiles/AndroidBuildTool_autogen

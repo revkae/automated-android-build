@@ -1,0 +1,12 @@
+[
+  {
+    "label": "Build Qt App",
+    "command": "cd build && cmake --build .",
+    "allow_concurrent_runs": false,
+  },
+  {
+    "label": "Run Qt App",
+    "command": "cd build && ./AndroidBuildTool",
+    "allow_concurrent_runs": false,
+  },
+]

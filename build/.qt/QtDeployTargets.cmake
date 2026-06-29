@@ -1,0 +1,2 @@
+set(__QT_DEPLOY_TARGET_AndroidBuildTool_FILE /Users/ravan/Documents/bash/automated-android-build/build/AndroidBuildTool)
+set(__QT_DEPLOY_TARGET_AndroidBuildTool_TYPE EXECUTABLE)
