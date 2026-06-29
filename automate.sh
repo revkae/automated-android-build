@@ -2,14 +2,14 @@
 
 set -e
 
-PROJECT_DIR="/Users/ravan/Documents/android"
-OUTPUT_DIR="/Users/ravan/Documents/android/output"
-PACKAGE="com.example.test"
-MAIN_ACTIVITY="com.example.test.MainActivity"
-KEY_LOCATION="/Users/ravan/Documents/android/signed_key/Untitled.jks"
-KEY_ALIAS="key0"
-KEY_STORE_PASS="test123"
-KEY_PASS="test123"
+PROJECT_DIR="${PROJECT_DIR:-/Users/ravan/Documents/android}"
+OUTPUT_DIR="${OUTPUT_DIR:-/Users/ravan/Documents/android/output}"
+PACKAGE="${PACKAGE:-com.example.test}"
+MAIN_ACTIVITY="${MAIN_ACTIVITY:-com.example.test.MainActivity}"
+KEY_LOCATION="${KEY_LOCATION:-/Users/ravan/Documents/android/signed_key/Untitled.jks}"
+KEY_ALIAS="${KEY_ALIAS:-key0}"
+KEY_STORE_PASS="${KEY_STORE_PASS:-test123}"
+KEY_PASS="${KEY_PASS:-test123}"
 
 ANDROID_HOME="${ANDROID_HOME:-$HOME/Library/Android/sdk}"
 BUILD_TOOLS_DIR=$(ls -d "$ANDROID_HOME/build-tools/"*/ 2>/dev/null | sort -V | tail -1)

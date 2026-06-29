@@ -2,6 +2,7 @@
 #include <QMainWindow>
 #include <QProcess>
 #include <QTextEdit>
+#include <QLineEdit>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -16,6 +17,17 @@ class MainWindow : public QMainWindow {
         void onFinished(int exitCode, QProcess::ExitStatus status);
 
     private:
+        void startBuild(const QString &type);
+
         QProcess  *process;
         QTextEdit *logOutput;
+
+        QLineEdit *projectDir;
+        QLineEdit *outputDir;
+        QLineEdit *package_;
+        QLineEdit *mainActivity;
+        QLineEdit *keyLocation;
+        QLineEdit *keyAlias;
+        QLineEdit *keyStorePass;
+        QLineEdit *keyPass;
 };
