@@ -13,6 +13,8 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/ravan/Documents/bash/automated-android-build/main.cpp" "CMakeFiles/AndroidBuildTool.dir/main.cpp.o" "gcc" "CMakeFiles/AndroidBuildTool.dir/main.cpp.o.d"
   "/Users/ravan/Documents/bash/automated-android-build/mainwindow.cpp" "CMakeFiles/AndroidBuildTool.dir/mainwindow.cpp.o" "gcc" "CMakeFiles/AndroidBuildTool.dir/mainwindow.cpp.o.d"
   "/Users/ravan/Documents/bash/automated-android-build/savesystem.cpp" "CMakeFiles/AndroidBuildTool.dir/savesystem.cpp.o" "gcc" "CMakeFiles/AndroidBuildTool.dir/savesystem.cpp.o.d"
+  "/Users/ravan/Documents/bash/automated-android-build/vb_savesystem.cpp" "CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.o" "gcc" "CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.o.d"
+  "/Users/ravan/Documents/bash/automated-android-build/versionbumperwidget.cpp" "CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.o" "gcc" "CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

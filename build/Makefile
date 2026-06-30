@@ -251,6 +251,54 @@ savesystem.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/AndroidBuildTool.dir/build.make CMakeFiles/AndroidBuildTool.dir/savesystem.cpp.s
 .PHONY : savesystem.cpp.s
 
+vb_savesystem.o: vb_savesystem.cpp.o
+.PHONY : vb_savesystem.o
+
+# target to build an object file
+vb_savesystem.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AndroidBuildTool.dir/build.make CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.o
+.PHONY : vb_savesystem.cpp.o
+
+vb_savesystem.i: vb_savesystem.cpp.i
+.PHONY : vb_savesystem.i
+
+# target to preprocess a source file
+vb_savesystem.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AndroidBuildTool.dir/build.make CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.i
+.PHONY : vb_savesystem.cpp.i
+
+vb_savesystem.s: vb_savesystem.cpp.s
+.PHONY : vb_savesystem.s
+
+# target to generate assembly for a file
+vb_savesystem.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AndroidBuildTool.dir/build.make CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.s
+.PHONY : vb_savesystem.cpp.s
+
+versionbumperwidget.o: versionbumperwidget.cpp.o
+.PHONY : versionbumperwidget.o
+
+# target to build an object file
+versionbumperwidget.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AndroidBuildTool.dir/build.make CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.o
+.PHONY : versionbumperwidget.cpp.o
+
+versionbumperwidget.i: versionbumperwidget.cpp.i
+.PHONY : versionbumperwidget.i
+
+# target to preprocess a source file
+versionbumperwidget.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AndroidBuildTool.dir/build.make CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.i
+.PHONY : versionbumperwidget.cpp.i
+
+versionbumperwidget.s: versionbumperwidget.cpp.s
+.PHONY : versionbumperwidget.s
+
+# target to generate assembly for a file
+versionbumperwidget.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AndroidBuildTool.dir/build.make CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.s
+.PHONY : versionbumperwidget.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -274,6 +322,12 @@ help:
 	@echo "... savesystem.o"
 	@echo "... savesystem.i"
 	@echo "... savesystem.s"
+	@echo "... vb_savesystem.o"
+	@echo "... vb_savesystem.i"
+	@echo "... vb_savesystem.s"
+	@echo "... versionbumperwidget.o"
+	@echo "... versionbumperwidget.i"
+	@echo "... versionbumperwidget.s"
 .PHONY : help
 
 

@@ -135,12 +135,42 @@ CMakeFiles/AndroidBuildTool.dir/savesystem.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/AndroidBuildTool.dir/savesystem.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ravan/Documents/bash/automated-android-build/savesystem.cpp -o CMakeFiles/AndroidBuildTool.dir/savesystem.cpp.s
 
+CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.o: CMakeFiles/AndroidBuildTool.dir/flags.make
+CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.o: /Users/ravan/Documents/bash/automated-android-build/vb_savesystem.cpp
+CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.o: CMakeFiles/AndroidBuildTool.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ravan/Documents/bash/automated-android-build/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.o -MF CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.o.d -o CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.o -c /Users/ravan/Documents/bash/automated-android-build/vb_savesystem.cpp
+
+CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ravan/Documents/bash/automated-android-build/vb_savesystem.cpp > CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.i
+
+CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ravan/Documents/bash/automated-android-build/vb_savesystem.cpp -o CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.s
+
+CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.o: CMakeFiles/AndroidBuildTool.dir/flags.make
+CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.o: /Users/ravan/Documents/bash/automated-android-build/versionbumperwidget.cpp
+CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.o: CMakeFiles/AndroidBuildTool.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ravan/Documents/bash/automated-android-build/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.o -MF CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.o.d -o CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.o -c /Users/ravan/Documents/bash/automated-android-build/versionbumperwidget.cpp
+
+CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ravan/Documents/bash/automated-android-build/versionbumperwidget.cpp > CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.i
+
+CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ravan/Documents/bash/automated-android-build/versionbumperwidget.cpp -o CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.s
+
 # Object files for target AndroidBuildTool
 AndroidBuildTool_OBJECTS = \
 "CMakeFiles/AndroidBuildTool.dir/AndroidBuildTool_autogen/mocs_compilation.cpp.o" \
 "CMakeFiles/AndroidBuildTool.dir/main.cpp.o" \
 "CMakeFiles/AndroidBuildTool.dir/mainwindow.cpp.o" \
-"CMakeFiles/AndroidBuildTool.dir/savesystem.cpp.o"
+"CMakeFiles/AndroidBuildTool.dir/savesystem.cpp.o" \
+"CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.o" \
+"CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.o"
 
 # External object files for target AndroidBuildTool
 AndroidBuildTool_EXTERNAL_OBJECTS =
@@ -149,12 +179,14 @@ AndroidBuildTool: CMakeFiles/AndroidBuildTool.dir/AndroidBuildTool_autogen/mocs_
 AndroidBuildTool: CMakeFiles/AndroidBuildTool.dir/main.cpp.o
 AndroidBuildTool: CMakeFiles/AndroidBuildTool.dir/mainwindow.cpp.o
 AndroidBuildTool: CMakeFiles/AndroidBuildTool.dir/savesystem.cpp.o
+AndroidBuildTool: CMakeFiles/AndroidBuildTool.dir/vb_savesystem.cpp.o
+AndroidBuildTool: CMakeFiles/AndroidBuildTool.dir/versionbumperwidget.cpp.o
 AndroidBuildTool: CMakeFiles/AndroidBuildTool.dir/build.make
 AndroidBuildTool: /opt/homebrew/lib/QtWidgets.framework/Versions/A/QtWidgets
 AndroidBuildTool: /opt/homebrew/lib/QtGui.framework/Versions/A/QtGui
 AndroidBuildTool: /opt/homebrew/lib/QtCore.framework/Versions/A/QtCore
 AndroidBuildTool: CMakeFiles/AndroidBuildTool.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/ravan/Documents/bash/automated-android-build/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable AndroidBuildTool"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/ravan/Documents/bash/automated-android-build/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable AndroidBuildTool"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/AndroidBuildTool.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

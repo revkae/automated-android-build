@@ -427,6 +427,18 @@
 			"MU",
 			"EWIEGA46WW/moc_savesystem.cpp",
 			null
+		],
+		[
+			"/Users/ravan/Documents/bash/automated-android-build/vb_savesystem.h",
+			"MU",
+			"EWIEGA46WW/moc_vb_savesystem.cpp",
+			null
+		],
+		[
+			"/Users/ravan/Documents/bash/automated-android-build/versionbumperwidget.h",
+			"MU",
+			"EWIEGA46WW/moc_versionbumperwidget.cpp",
+			null
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
@@ -442,7 +454,7 @@
 	],
 	"MOC_INCLUDES" : 
 	[
-		"/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1",
+		"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1",
 		"/opt/homebrew/lib/QtCore.framework/Headers",
 		"/opt/homebrew/lib/QtCore.framework",
 		"/opt/homebrew/share/qt/mkspecs/macx-clang",
@@ -502,6 +514,16 @@
 		],
 		[
 			"/Users/ravan/Documents/bash/automated-android-build/savesystem.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/ravan/Documents/bash/automated-android-build/vb_savesystem.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/ravan/Documents/bash/automated-android-build/versionbumperwidget.cpp",
 			"MU",
 			null
 		]

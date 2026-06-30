@@ -734,7 +734,13 @@ AndroidBuildTool_autogen/timestamp: /Library/Developer/CommandLineTools/SDKs/Mac
   /Users/ravan/Documents/bash/automated-android-build/main.cpp \
   /Users/ravan/Documents/bash/automated-android-build/mainwindow.cpp \
   /Users/ravan/Documents/bash/automated-android-build/mainwindow.h \
+  /Users/ravan/Documents/bash/automated-android-build/savedata.h \
+  /Users/ravan/Documents/bash/automated-android-build/savesystem.cpp \
+  /Users/ravan/Documents/bash/automated-android-build/savesystem.h \
+  /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/QMap \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/QProcess \
+  /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/QString \
+  /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/QStringList \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/q17memory.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/q20bit.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/q20functional.h \
@@ -744,6 +750,7 @@ AndroidBuildTool_autogen/timestamp: /Library/Developer/CommandLineTools/SDKs/Mac
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/q20utility.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/q23type_traits.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/q23utility.h \
+  /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qabstractitemmodel.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qalgorithms.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qalloc.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qanystringview.h \
@@ -793,6 +800,7 @@ AndroidBuildTool_autogen/timestamp: /Library/Developer/CommandLineTools/SDKs/Mac
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qlatin1stringview.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qline.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qlist.h \
+  /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qlocale.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qlogging.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qmalloc.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qmap.h \
@@ -814,6 +822,7 @@ AndroidBuildTool_autogen/timestamp: /Library/Developer/CommandLineTools/SDKs/Mac
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qprocessordetection.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qrect.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qrefcount.h \
+  /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qregularexpression.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qscopedpointer.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qscopeguard.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qset.h \
@@ -895,15 +904,26 @@ AndroidBuildTool_autogen/timestamp: /Library/Developer/CommandLineTools/SDKs/Mac
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtGui.framework/Versions/A/Headers/qtguiexports.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtGui.framework/Versions/A/Headers/qtguiglobal.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtGui.framework/Versions/A/Headers/qtransform.h \
+  /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtGui.framework/Versions/A/Headers/qvalidator.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtGui.framework/Versions/A/Headers/qwindowdefs.h \
+  /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/QComboBox \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/QLineEdit \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/QMainWindow \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/QTextEdit \
+  /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qabstractitemdelegate.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qabstractscrollarea.h \
+  /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qabstractslider.h \
+  /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qabstractspinbox.h \
+  /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qcombobox.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qframe.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qlineedit.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qmainwindow.h \
+  /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qrubberband.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qsizepolicy.h \
+  /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qslider.h \
+  /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qstyle.h \
+  /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qstyleoption.h \
+  /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qtabbar.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qtabwidget.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qtextedit.h \
   /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qtwidgets-config.h \
@@ -1575,6 +1595,10 @@ AndroidBuildTool_autogen/timestamp: /Library/Developer/CommandLineTools/SDKs/Mac
 
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qtabwidget.h:
 
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qtabbar.h:
+
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qslider.h:
+
 /opt/homebrew/lib/cmake/Qt6Gui/Qt6GuiTargets.cmake:
 
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qmainwindow.h:
@@ -1582,6 +1606,12 @@ AndroidBuildTool_autogen/timestamp: /Library/Developer/CommandLineTools/SDKs/Mac
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qlineedit.h:
 
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qframe.h:
+
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qcombobox.h:
+
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qabstractspinbox.h:
+
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qabstractslider.h:
 
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qabstractscrollarea.h:
 
@@ -1592,6 +1622,8 @@ AndroidBuildTool_autogen/timestamp: /Library/Developer/CommandLineTools/SDKs/Mac
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/QLineEdit:
 
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtGui.framework/Versions/A/Headers/qwindowdefs.h:
+
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtGui.framework/Versions/A/Headers/qvalidator.h:
 
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qsizepolicy.h:
 
@@ -1717,6 +1749,8 @@ AndroidBuildTool_autogen/timestamp: /Library/Developer/CommandLineTools/SDKs/Mac
 
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qscopedpointer.h:
 
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qregularexpression.h:
+
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qrefcount.h:
 
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qrect.h:
@@ -1751,9 +1785,7 @@ AndroidBuildTool_autogen/timestamp: /Library/Developer/CommandLineTools/SDKs/Mac
 
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qmetacontainer.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__fwd/istream.h:
-
-/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qmargins.h:
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qmath.h:
 
 /opt/homebrew/lib/cmake/Qt6Gui/Qt6QWbmpPluginTargets-release.cmake:
 
@@ -1764,6 +1796,12 @@ AndroidBuildTool_autogen/timestamp: /Library/Developer/CommandLineTools/SDKs/Mac
 /opt/homebrew/lib/cmake/Qt6Gui/Qt6QMacHeifPluginAdditionalTargetInfo.cmake:
 
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qlogging.h:
+
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qlocale.h:
+
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qlist.h:
+
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qline.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__utility/forward_like.h:
 
@@ -1782,6 +1820,8 @@ AndroidBuildTool_autogen/timestamp: /Library/Developer/CommandLineTools/SDKs/Mac
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qhash.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__locale_dir/support/apple.h:
+
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/QString:
 
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qgenericatomic.h:
 
@@ -1819,7 +1859,7 @@ AndroidBuildTool_autogen/timestamp: /Library/Developer/CommandLineTools/SDKs/Mac
 
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qalgorithms.h:
 
-/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/q20utility.h:
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qabstractitemmodel.h:
 
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/q20type_traits.h:
 
@@ -1832,6 +1872,16 @@ AndroidBuildTool_autogen/timestamp: /Library/Developer/CommandLineTools/SDKs/Mac
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/q20iterator.h:
 
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/q20functional.h:
+
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/q20utility.h:
+
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/QMap:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__math/hyperbolic_functions.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/sys/_types/_blksize_t.h:
+
+/Users/ravan/Documents/bash/automated-android-build/savedata.h:
 
 /Users/ravan/Documents/bash/automated-android-build/mainwindow.cpp:
 
@@ -1887,6 +1937,8 @@ AndroidBuildTool_autogen/timestamp: /Library/Developer/CommandLineTools/SDKs/Mac
 
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qalloc.h:
 
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qrubberband.h:
+
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qfunctionpointer.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/sys/_types/_uid_t.h:
@@ -1898,6 +1950,8 @@ AndroidBuildTool_autogen/timestamp: /Library/Developer/CommandLineTools/SDKs/Mac
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/sys/_types/_u_int64_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/sys/_types/_u_int16_t.h:
+
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qstyle.h:
 
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qtcoreexports.h:
 
@@ -1950,10 +2004,6 @@ CMakeFiles/4.3.4/CMakeCXXCompiler.cmake:
 /opt/homebrew/share/cmake/Modules/CMakeCXXInformation.cmake:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/sys/_types/_fd_copy.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__math/hyperbolic_functions.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/sys/_types/_blksize_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__algorithm/find_if_not.h:
 
@@ -2020,6 +2070,8 @@ CMakeFiles/4.3.4/CMakeCXXCompiler.cmake:
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__functional/binder2nd.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/variant:
+
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qabstractitemdelegate.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/unordered_set:
 
@@ -2093,6 +2145,8 @@ CMakeFiles/4.3.4/CMakeCXXCompiler.cmake:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/forward_list:
 
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/QComboBox:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/cstring:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__math/exponential_functions.h:
@@ -2124,8 +2178,6 @@ CMakeFiles/4.3.4/CMakeCXXCompiler.cmake:
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__vector/vector.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__vector/pmr.h:
-
-/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qlist.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__vector/comparison.h:
 
@@ -2353,8 +2405,6 @@ CMakeFiles/4.3.4/CMakeCXXCompiler.cmake:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__type_traits/is_callable.h:
 
-/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qline.h:
-
 /opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qdebug.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__algorithm/unwrap_range.h:
@@ -2404,6 +2454,8 @@ CMakeFiles/4.3.4/CMakeCXXCompiler.cmake:
 /opt/homebrew/lib/cmake/Qt6Widgets/Qt6WidgetsAdditionalTargetInfo.cmake:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/sys/_types/_u_int8_t.h:
+
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtWidgets.framework/Versions/A/Headers/qstyleoption.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__type_traits/add_pointer.h:
 
@@ -2609,6 +2661,10 @@ CMakeFiles/4.3.4/CMakeCXXCompiler.cmake:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__numeric/gcd_lcm.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__algorithm/none_of.h:
+
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/QStringList:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__numeric/adjacent_difference.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__fwd/variant.h:
@@ -2712,6 +2768,8 @@ CMakeFiles/4.3.4/CMakeCXXCompiler.cmake:
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__atomic/is_always_lock_free.h:
 
 CMakeFiles/4.3.4/CMakeSystem.cmake:
+
+/Users/ravan/Documents/bash/automated-android-build/savesystem.cpp:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/sys/_types/_int32_t.h:
 
@@ -2873,8 +2931,6 @@ CMakeFiles/4.3.4/CMakeSystem.cmake:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__iterator/iter_swap.h:
 
-/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qmath.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__string/char_traits.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__algorithm/remove_copy_if.h:
@@ -2888,6 +2944,8 @@ CMakeFiles/4.3.4/CMakeSystem.cmake:
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__iterator/empty.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__iterator/default_sentinel.h:
+
+/Users/ravan/Documents/bash/automated-android-build/savesystem.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__iterator/data.h:
 
@@ -2938,6 +2996,10 @@ CMakeFiles/4.3.4/CMakeSystem.cmake:
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__algorithm/all_of.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/sys/types.h:
+
+/opt/homebrew/Cellar/qtbase/6.11.1/lib/QtCore.framework/Versions/A/Headers/qmargins.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__fwd/istream.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__functional/perfect_forward.h:
 
@@ -3466,8 +3528,6 @@ CMakeFiles/4.3.4/CMakeSystem.cmake:
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__iterator/erase_if_container.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__algorithm/push_heap.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__algorithm/none_of.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX26.2.sdk/usr/include/c++/v1/__memory/construct_at.h:
 

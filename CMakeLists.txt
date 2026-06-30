@@ -12,5 +12,11 @@ if(APPLE)
   include_directories(SYSTEM "${MACOS_SDK_PATH}/usr/include/c++/v1")
 endif()
 
-add_executable(AndroidBuildTool main.cpp mainwindow.cpp savesystem.cpp)
+add_executable(AndroidBuildTool
+    main.cpp
+    mainwindow.cpp
+    savesystem.cpp
+    vb_savesystem.cpp
+    versionbumperwidget.cpp
+)
 target_link_libraries(AndroidBuildTool Qt6::Core Qt6::Widgets)

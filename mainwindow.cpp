@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "versionbumperwidget.h"
 #include <QWidget>
 #include <QPushButton>
 #include <QTextEdit>
@@ -24,9 +25,19 @@ static QString stripAnsi(const QByteArray &raw) {
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QWidget *central = new QWidget(this);
-    QVBoxLayout *layout = new QVBoxLayout(central);
+    QVBoxLayout *mainLayout = new QVBoxLayout(central);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
 
-    // --- Profile bar ---
+    tabs = new QTabWidget(this);
+    mainLayout->addWidget(tabs);
+
+    // --- Tab 1: Version Bump ---
+    tabs->addTab(new VersionBumperWidget(this), "Version Bump");
+
+    // --- Tab 2: Build ---
+    QWidget *buildTab = new QWidget(this);
+    QVBoxLayout *layout = new QVBoxLayout(buildTab);
+
     QHBoxLayout *profileBar = new QHBoxLayout();
     profileBar->addWidget(new QLabel("Profile:"));
     profileCombo = new QComboBox(this);
@@ -39,7 +50,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     profileBar->addWidget(renameProfileBtn);
     profileBar->addWidget(saveProfileBtn);
 
-    // --- Form ---
     QFormLayout *form = new QFormLayout();
     projectDir   = new QLineEdit(this);
     outputDir    = new QLineEdit(this);
@@ -72,6 +82,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     layout->addWidget(debugBtn);
     layout->addWidget(releaseBtn);
     layout->addWidget(logOutput);
+
+    tabs->addTab(buildTab, "Build");
     setCentralWidget(central);
 
     // Populate combo from saved profiles (block signals so we only load once)

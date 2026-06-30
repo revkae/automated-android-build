@@ -5,6 +5,9 @@
 #include <QTextEdit>
 #include <QLineEdit>
 #include <QComboBox>
+#include <QTabWidget>
+
+class VersionBumperWidget;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -28,7 +31,8 @@ private:
     QString nextProfileName() const;
 
     SaveSystem saveSystem;
-    QComboBox *profileCombo;
+    QTabWidget *tabs;
+    QComboBox  *profileCombo;
 
     QProcess  *process;
     QTextEdit *logOutput;
