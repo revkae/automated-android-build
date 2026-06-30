@@ -17,7 +17,7 @@
 #include <QRegularExpression>
 #include <QSignalBlocker>
 
-static const QRegularExpression kVerRe(R"((\d+)\.(\d+)\.(\d+))");
+static const QRegularExpression kVerRe(R"((\d+)\.(\d+)(?:\.(\d+))?)");
 
 static const QRegularExpression kCodeRe(
     R"(((?:versionCode|lockfileVersion|version_code|VERSION_CODE)["'\s]*[:=]\s*["']?)(\d+))");
@@ -37,11 +37,14 @@ static QString applyBump(const QString &version, int segment) {
     if (!m.hasMatch()) return version;
     int major = m.captured(1).toInt();
     int minor = m.captured(2).toInt();
-    int patch = m.captured(3).toInt();
+    bool hasPatch = !m.captured(3).isEmpty();
+    int patch = hasPatch ? m.captured(3).toInt() : 0;
     if (segment == 3) { major++; minor = 0; patch = 0; }
     else if (segment == 2) { minor++; patch = 0; }
-    else { patch++; }
-    return QString("%1.%2.%3").arg(major).arg(minor).arg(patch);
+    else { patch++; hasPatch = true; }
+    if (hasPatch)
+        return QString("%1.%2.%3").arg(major).arg(minor).arg(patch);
+    return QString("%1.%2").arg(major).arg(minor);
 }
 
 VersionBumperWidget::VersionBumperWidget(QWidget *parent) : QWidget(parent) {
