@@ -84,6 +84,8 @@ jobs:
         QString alias = currentProfile_.keyAlias.isEmpty()
                         ? "your-key-alias"
                         : currentProfile_.keyAlias;
+        alias.remove('\n').remove('\r');
+        alias.replace("\"", "\\\"");
         yaml += R"(
       - name: Decode keystore
         run: |
@@ -94,7 +96,7 @@ jobs:
           BUILD_TOOLS=$(ls -d $ANDROID_HOME/build-tools/*/ | sort -V | tail -1)
           ${BUILD_TOOLS}apksigner sign \
             --ks keystore.jks \
-            --ks-key-alias )" + alias + R"( \
+            --ks-key-alias ")" + alias + R"(" \
             --ks-pass pass:${{ secrets.KEY_STORE_PASS }} \
             --key-pass pass:${{ secrets.KEY_PASS }} \
             --out app/build/outputs/apk/release/app-release-signed.apk \
