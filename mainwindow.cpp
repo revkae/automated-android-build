@@ -151,6 +151,7 @@ void MainWindow::onSaveProfile() {
     d.keyStorePass = keyStorePass->text();
     d.keyPass      = keyPass->text();
     saveSystem.save(name, d);
+    QMessageBox::information(this, "Build", QString("Profile \"%1\" saved.").arg(name));
 }
 
 void MainWindow::onRenameProfile() {
