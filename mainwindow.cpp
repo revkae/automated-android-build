@@ -15,6 +15,7 @@
 #include <QComboBox>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QFileDialog>
 
 static QString stripAnsi(const QByteArray &raw) {
     QString text = QString::fromUtf8(raw);
@@ -63,11 +64,39 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     keyStorePass->setEchoMode(QLineEdit::Password);
     keyPass->setEchoMode(QLineEdit::Password);
 
-    form->addRow("Project Dir:",    projectDir);
-    form->addRow("Output Dir:",     outputDir);
+    auto makeBrowseDirRow = [&](QLineEdit *edit) {
+        QWidget *w = new QWidget(this);
+        QHBoxLayout *h = new QHBoxLayout(w);
+        h->setContentsMargins(0, 0, 0, 0);
+        h->addWidget(edit);
+        QPushButton *btn = new QPushButton("Browse…", this);
+        connect(btn, &QPushButton::clicked, this, [=]() {
+            QString dir = QFileDialog::getExistingDirectory(this, "Select Directory", edit->text());
+            if (!dir.isEmpty()) edit->setText(dir);
+        });
+        h->addWidget(btn);
+        return w;
+    };
+
+    auto makeBrowseFileRow = [&](QLineEdit *edit) {
+        QWidget *w = new QWidget(this);
+        QHBoxLayout *h = new QHBoxLayout(w);
+        h->setContentsMargins(0, 0, 0, 0);
+        h->addWidget(edit);
+        QPushButton *btn = new QPushButton("Browse…", this);
+        connect(btn, &QPushButton::clicked, this, [=]() {
+            QString file = QFileDialog::getOpenFileName(this, "Select File", edit->text());
+            if (!file.isEmpty()) edit->setText(file);
+        });
+        h->addWidget(btn);
+        return w;
+    };
+
+    form->addRow("Project Dir:",    makeBrowseDirRow(projectDir));
+    form->addRow("Output Dir:",     makeBrowseDirRow(outputDir));
     form->addRow("Package:",        package_);
     form->addRow("Main Activity:",  mainActivity);
-    form->addRow("Key Location:",   keyLocation);
+    form->addRow("Key Location:",   makeBrowseFileRow(keyLocation));
     form->addRow("Key Alias:",      keyAlias);
     form->addRow("Key Store Pass:", keyStorePass);
     form->addRow("Key Pass:",       keyPass);
