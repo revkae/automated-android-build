@@ -1,5 +1,6 @@
 #pragma once
 #include "savesystem.h"
+#include "githubactionstab.h"
 #include <QMainWindow>
 #include <QProcess>
 #include <QTextEdit>
@@ -37,6 +38,7 @@ private:
 
     QProcess  *process;
     QTextEdit *logOutput;
+    GitHubActionsTab *githubActionsTab;
 
     QLineEdit *projectDir;
     QLineEdit *outputDir;

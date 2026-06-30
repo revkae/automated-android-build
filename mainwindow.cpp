@@ -131,6 +131,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     layout->addWidget(logOutput);
 
     tabs->addTab(buildTab, "Build");
+    githubActionsTab = new GitHubActionsTab(this);
+    tabs->addTab(githubActionsTab, "GitHub Actions");
     setCentralWidget(central);
 
     // Populate combo from saved profiles (block signals so we only load once)
@@ -176,6 +178,7 @@ void MainWindow::loadProfileIntoForm(const QString &name) {
     keyAlias->setText(d.keyAlias);
     keyStorePass->setText(d.keyStorePass);
     keyPass->setText(d.keyPass);
+    githubActionsTab->setProfile(d);
 }
 
 void MainWindow::onNewProfile() {
