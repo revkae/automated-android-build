@@ -28,6 +28,7 @@ private slots:
 private:
     void    startBuild(const QString &type);
     void    loadProfileIntoForm(const QString &name);
+    void    autoFillFromManifest(const QString &dir);
     QString nextProfileName() const;
 
     SaveSystem saveSystem;

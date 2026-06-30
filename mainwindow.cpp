@@ -16,6 +16,8 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QXmlStreamReader>
+#include <QFile>
 
 static QString stripAnsi(const QByteArray &raw) {
     QString text = QString::fromUtf8(raw);
@@ -92,7 +94,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
         return w;
     };
 
-    form->addRow("Project Dir:",    makeBrowseDirRow(projectDir));
+    // Project Dir row: browse + auto-fill package/main activity from AndroidManifest.xml
+    {
+        QWidget *w = new QWidget(this);
+        QHBoxLayout *h = new QHBoxLayout(w);
+        h->setContentsMargins(0, 0, 0, 0);
+        h->addWidget(projectDir);
+        QPushButton *btn = new QPushButton("Browse…", this);
+        connect(btn, &QPushButton::clicked, this, [=]() {
+            QString dir = QFileDialog::getExistingDirectory(this, "Select Directory", projectDir->text());
+            if (!dir.isEmpty()) {
+                projectDir->setText(dir);
+                autoFillFromManifest(dir);
+            }
+        });
+        h->addWidget(btn);
+        form->addRow("Project Dir:", w);
+    }
     form->addRow("Output Dir:",     makeBrowseDirRow(outputDir));
     form->addRow("Package:",        package_);
     form->addRow("Main Activity:",  mainActivity);
@@ -231,4 +249,82 @@ void MainWindow::onFinished(int exitCode, QProcess::ExitStatus) {
         logOutput->append("\n--- Build succeeded ---");
     else
         logOutput->append(QString("\n--- Build failed (exit %1) ---").arg(exitCode));
+}
+
+void MainWindow::autoFillFromManifest(const QString &dir) {
+    // --- Parse AndroidManifest.xml for activity name ---
+    QStringList manifestCandidates = {
+        dir + "/app/src/main/AndroidManifest.xml",
+        dir + "/src/main/AndroidManifest.xml",
+        dir + "/AndroidManifest.xml"
+    };
+
+    QString manifestPath;
+    for (const QString &c : manifestCandidates) {
+        if (QFile::exists(c)) { manifestPath = c; break; }
+    }
+    if (manifestPath.isEmpty()) return;
+
+    QFile file(manifestPath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) return;
+
+    QXmlStreamReader xml(&file);
+    QString pkg;           // may be empty in modern AGP projects
+    QString rawActivity;   // raw android:name, possibly relative (starts with '.')
+    QString currentActivity;
+    bool inIntentFilter = false;
+    bool hasMainAction  = false;
+
+    while (!xml.atEnd()) {
+        xml.readNext();
+        if (xml.isStartElement()) {
+            const auto name = xml.name();
+            if (name == QLatin1String("manifest")) {
+                pkg = xml.attributes().value("package").toString();
+            } else if (name == QLatin1String("activity") || name == QLatin1String("activity-alias")) {
+                currentActivity = xml.attributes().value("http://schemas.android.com/apk/res/android", "name").toString();
+                inIntentFilter = false;
+                hasMainAction  = false;
+            } else if (name == QLatin1String("intent-filter")) {
+                inIntentFilter = true;
+            } else if (inIntentFilter && name == QLatin1String("action")) {
+                if (xml.attributes().value("http://schemas.android.com/apk/res/android", "name") == "android.intent.action.MAIN")
+                    hasMainAction = true;
+            }
+        } else if (xml.isEndElement()) {
+            if (xml.name() == QLatin1String("intent-filter")) {
+                if (hasMainAction && !currentActivity.isEmpty() && rawActivity.isEmpty())
+                    rawActivity = currentActivity;
+                inIntentFilter = false;
+                hasMainAction  = false;
+            }
+        }
+    }
+
+    // --- If package not in manifest, check build.gradle / build.gradle.kts ---
+    // AGP 7.3+ uses `namespace` in the module build file instead of manifest `package`
+    if (pkg.isEmpty()) {
+        QStringList gradleCandidates = {
+            dir + "/app/build.gradle.kts",
+            dir + "/app/build.gradle",
+            dir + "/build.gradle.kts",
+            dir + "/build.gradle"
+        };
+        // matches: namespace "com.foo" / namespace = "com.foo" / applicationId "com.foo" etc.
+        static QRegularExpression pkgRe(R"((?:namespace|applicationId)\s*=?\s*["']([A-Za-z][A-Za-z0-9_.]+)["'])");
+        for (const QString &g : gradleCandidates) {
+            QFile gf(g);
+            if (!gf.open(QIODevice::ReadOnly | QIODevice::Text)) continue;
+            auto m = pkgRe.match(QString::fromUtf8(gf.readAll()));
+            if (m.hasMatch()) { pkg = m.captured(1); break; }
+        }
+    }
+
+    // Resolve relative activity name using the package we found
+    QString activity = rawActivity;
+    if (!activity.isEmpty() && activity.startsWith('.') && !pkg.isEmpty())
+        activity = pkg + activity;
+
+    if (!pkg.isEmpty())      package_->setText(pkg);
+    if (!activity.isEmpty()) mainActivity->setText(activity);
 }
