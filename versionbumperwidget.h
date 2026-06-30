@@ -22,6 +22,7 @@ private slots:
     void onAddFile();
     void onRemove();
     void onApply();
+    void onApplyWithAutomation();
     void refreshVersionPreview();
 
 private:
@@ -36,6 +37,7 @@ private:
     QList<FileEntryData> entries_;
     VBSaveSystem         saveSystem_;
 
+    QString doApply();
     void    loadProfile(const VBProfileData &data);
     void    addFileRow(const QString &path, int occurrences);
     QString detectVersion(const QString &path) const;

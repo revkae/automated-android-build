@@ -16,6 +16,8 @@
 #include <QTextStream>
 #include <QRegularExpression>
 #include <QSignalBlocker>
+#include <QProcess>
+#include <QFileInfo>
 
 static const QRegularExpression kVerRe(R"((\d+)\.(\d+)(?:\.(\d+))?)");
 
@@ -104,9 +106,14 @@ VersionBumperWidget::VersionBumperWidget(QWidget *parent) : QWidget(parent) {
     form->addRow("Current Version Code:", currentCodeLabel);
     layout->addLayout(form);
 
-    auto *applyBtn = new QPushButton("Apply Version Bump");
+    auto *applyRow    = new QHBoxLayout;
+    auto *applyBtn    = new QPushButton("Apply Version Bump");
+    auto *applyAutoBtn = new QPushButton("Apply Version Bump with Automation");
     applyBtn->setFixedHeight(36);
-    layout->addWidget(applyBtn);
+    applyAutoBtn->setFixedHeight(36);
+    applyRow->addWidget(applyBtn);
+    applyRow->addWidget(applyAutoBtn);
+    layout->addLayout(applyRow);
 
     // Populate profile combo
     {
@@ -123,7 +130,8 @@ VersionBumperWidget::VersionBumperWidget(QWidget *parent) : QWidget(parent) {
     connect(profileCombo, &QComboBox::currentTextChanged, this, &VersionBumperWidget::onProfileChanged);
     connect(addBtn,    &QPushButton::clicked, this, &VersionBumperWidget::onAddFile);
     connect(removeBtn, &QPushButton::clicked, this, &VersionBumperWidget::onRemove);
-    connect(applyBtn,  &QPushButton::clicked, this, &VersionBumperWidget::onApply);
+    connect(applyBtn,     &QPushButton::clicked, this, &VersionBumperWidget::onApply);
+    connect(applyAutoBtn, &QPushButton::clicked, this, &VersionBumperWidget::onApplyWithAutomation);
     connect(segmentSpin, &QSpinBox::valueChanged, this, &VersionBumperWidget::refreshVersionPreview);
 }
 
@@ -200,37 +208,29 @@ void VersionBumperWidget::onRemove() {
     refreshVersionPreview();
 }
 
-void VersionBumperWidget::onApply() {
-    if (entries_.isEmpty()) {
-        QMessageBox::information(this, "Version Bumper", "No files in the list.");
-        return;
-    }
-
-    int segment      = segmentSpin->value();
+QString VersionBumperWidget::doApply() {
+    int segment        = segmentSpin->value();
     QString newCodeStr = QString::number(newCodeSpin->value());
-    int errorCount   = 0;
+    QString newVer;
+    int errorCount = 0;
 
     for (const auto &entry : entries_) {
         QFile file(entry.path);
-        if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
-            errorCount++;
-            continue;
-        }
+        if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) { errorCount++; continue; }
         QString content = file.readAll();
 
         QString currentVer = detectVersionInContent(content);
-        if (currentVer.isEmpty()) {
-            errorCount++;
-            file.close();
-            continue;
-        }
-        QString newVer = applyBump(currentVer, segment);
+        if (currentVer.isEmpty()) { errorCount++; file.close(); continue; }
+
+        QString bumped = applyBump(currentVer, segment);
+        if (newVer.isEmpty()) newVer = bumped;
+
         int pos = 0;
         for (int i = 0; i < entry.occurrences; ++i) {
             int idx = content.indexOf(currentVer, pos);
             if (idx < 0) break;
-            content.replace(idx, currentVer.length(), newVer);
-            pos = idx + newVer.length();
+            content.replace(idx, currentVer.length(), bumped);
+            pos = idx + bumped.length();
         }
 
         QList<QRegularExpressionMatch> codeMatches;
@@ -248,11 +248,55 @@ void VersionBumperWidget::onApply() {
 
     refreshVersionPreview();
 
-    if (errorCount > 0)
+    if (errorCount > 0) {
         QMessageBox::warning(this, "Version Bumper",
             QString("%1 file(s) could not be updated.").arg(errorCount));
-    else
+        return {};
+    }
+    return newVer;
+}
+
+void VersionBumperWidget::onApply() {
+    if (entries_.isEmpty()) {
+        QMessageBox::information(this, "Version Bumper", "No files in the list.");
+        return;
+    }
+    if (!doApply().isEmpty())
         QMessageBox::information(this, "Version Bumper", "All files updated successfully.");
+}
+
+void VersionBumperWidget::onApplyWithAutomation() {
+    if (entries_.isEmpty()) {
+        QMessageBox::information(this, "Version Bumper", "No files in the list.");
+        return;
+    }
+
+    QString newVer = doApply();
+    if (newVer.isEmpty()) return;
+
+    QString tag     = "v" + newVer;
+    QString workDir = QFileInfo(entries_.first().path).absolutePath();
+
+    QProcess gitTag;
+    gitTag.setProcessChannelMode(QProcess::MergedChannels);
+    gitTag.start("git", {"-C", workDir, "tag", tag});
+    if (!gitTag.waitForFinished(10000) || gitTag.exitCode() != 0) {
+        QMessageBox::warning(this, "Version Bumper",
+            QString("git tag %1 failed:\n%2").arg(tag, QString::fromUtf8(gitTag.readAll())));
+        return;
+    }
+
+    QProcess gitPush;
+    gitPush.setProcessChannelMode(QProcess::MergedChannels);
+    gitPush.start("git", {"-C", workDir, "push", "origin", tag});
+    if (!gitPush.waitForFinished(30000) || gitPush.exitCode() != 0) {
+        QMessageBox::warning(this, "Version Bumper",
+            QString("git push %1 failed:\n%2").arg(tag, QString::fromUtf8(gitPush.readAll())));
+        return;
+    }
+
+    QMessageBox::information(this, "Version Bumper",
+        QString("Version bumped to %1, tag %2 created and pushed.").arg(newVer, tag));
 }
 
 void VersionBumperWidget::refreshVersionPreview() {
