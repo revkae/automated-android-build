@@ -17,6 +17,7 @@ add_executable(AndroidBuildTool
     mainwindow.cpp
     savesystem.cpp
     versionbumperwidget.cpp
+    buildtab.cpp
     githubactionstab.cpp
 )
 target_link_libraries(AndroidBuildTool Qt6::Core Qt6::Widgets)
