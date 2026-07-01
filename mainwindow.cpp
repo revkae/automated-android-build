@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     connect(buildTab, &BuildTab::profileChanged,
             githubActionsTab, &GitHubActionsTab::setProfile);
+    buildTab->syncProfile();
 
     layout->addWidget(tabs);
     setCentralWidget(central);

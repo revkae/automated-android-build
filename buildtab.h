@@ -11,6 +11,7 @@ class BuildTab : public QWidget {
     Q_OBJECT
 public:
     explicit BuildTab(QWidget *parent = nullptr);
+    void syncProfile();
 
 signals:
     void profileChanged(const SaveData &data);

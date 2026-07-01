@@ -165,6 +165,20 @@ BuildTab::BuildTab(QWidget *parent)
             this, &BuildTab::onFinished);
 }
 
+void BuildTab::syncProfile() {
+    if (profileCombo->currentText().isEmpty()) return;
+    SaveData d;
+    d.projectDir   = projectDir->text();
+    d.outputDir    = outputDir->text();
+    d.package_     = package_->text();
+    d.mainActivity = mainActivity->text();
+    d.keyLocation  = keyLocation->text();
+    d.keyAlias     = keyAlias->text();
+    d.keyStorePass = keyStorePass->text();
+    d.keyPass      = keyPass->text();
+    emit profileChanged(d);
+}
+
 QString BuildTab::nextProfileName() const {
     int n = 1;
     while (saveSystem_.exists(QString("Profile%1").arg(n)))
