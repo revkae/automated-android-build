@@ -13,7 +13,6 @@
 #include <QFileDialog>
 #include <QXmlStreamReader>
 #include <QFile>
-#include <QJsonObject>
 #include <QSignalBlocker>
 
 static QString stripAnsi(const QByteArray &raw) {
@@ -23,33 +22,9 @@ static QString stripAnsi(const QByteArray &raw) {
     return text;
 }
 
-BuildTab::BuildTab(QWidget *parent)
+BuildTab::BuildTab(ProfileStore<AppProfileData> *store, QWidget *parent)
     : QWidget(parent)
-    , saveSystem_("build",
-        [](const SaveData &d) -> QJsonObject {
-            QJsonObject o;
-            o["projectDir"]   = d.projectDir;
-            o["outputDir"]    = d.outputDir;
-            o["package_"]     = d.package_;
-            o["mainActivity"] = d.mainActivity;
-            o["keyLocation"]  = d.keyLocation;
-            o["keyAlias"]     = d.keyAlias;
-            o["keyStorePass"] = d.keyStorePass;
-            o["keyPass"]      = d.keyPass;
-            return o;
-        },
-        [](const QJsonObject &o) -> SaveData {
-            SaveData d;
-            d.projectDir   = o["projectDir"].toString();
-            d.outputDir    = o["outputDir"].toString();
-            d.package_     = o["package_"].toString();
-            d.mainActivity = o["mainActivity"].toString();
-            d.keyLocation  = o["keyLocation"].toString();
-            d.keyAlias     = o["keyAlias"].toString();
-            d.keyStorePass = o["keyStorePass"].toString();
-            d.keyPass      = o["keyPass"].toString();
-            return d;
-        })
+    , store_(store)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
 
@@ -143,7 +118,7 @@ BuildTab::BuildTab(QWidget *parent)
 
     {
         QSignalBlocker blocker(profileCombo);
-        for (const QString &name : saveSystem_.profileNames())
+        for (const QString &name : store_->profileNames())
             profileCombo->addItem(name);
     }
     if (profileCombo->count() > 0)
@@ -179,15 +154,25 @@ void BuildTab::syncProfile() {
     emit profileChanged(d);
 }
 
+void BuildTab::refreshProfileList() {
+    QSignalBlocker blocker(profileCombo);
+    QString current = profileCombo->currentText();
+    profileCombo->clear();
+    for (const QString &name : store_->profileNames())
+        profileCombo->addItem(name);
+    if (profileCombo->findText(current) >= 0)
+        profileCombo->setCurrentText(current);
+}
+
 QString BuildTab::nextProfileName() const {
     int n = 1;
-    while (saveSystem_.exists(QString("Profile%1").arg(n)))
+    while (store_->exists(QString("Profile%1").arg(n)))
         ++n;
     return QString("Profile%1").arg(n);
 }
 
 void BuildTab::loadProfileIntoForm(const QString &name) {
-    SaveData d = saveSystem_.load(name);
+    const SaveData &d = store_->load(name).build;
     projectDir->setText(d.projectDir);
     outputDir->setText(d.outputDir);
     package_->setText(d.package_);
@@ -200,26 +185,36 @@ void BuildTab::loadProfileIntoForm(const QString &name) {
 }
 
 void BuildTab::onNewProfile() {
-    QString name = nextProfileName();
-    saveSystem_.save(name, SaveData{});
+    QString name = QInputDialog::getText(this, "New Profile", "Profile name:");
+    if (name.isEmpty()) return;
+    if (store_->exists(name)) {
+        QMessageBox::warning(this, "Build", "A profile with that name already exists.");
+        return;
+    }
+
+    store_->save(name, AppProfileData{});
     profileCombo->addItem(name);
-    profileCombo->setCurrentText(name);
+    {
+        QSignalBlocker b(profileCombo);
+        profileCombo->setCurrentText(name);
+    }
+    emit profileListChanged();
 }
 
 void BuildTab::onSaveProfile() {
     QString name = profileCombo->currentText();
     if (name.isEmpty()) return;
-    SaveData d;
-    d.projectDir   = projectDir->text();
-    d.outputDir    = outputDir->text();
-    d.package_     = package_->text();
-    d.mainActivity = mainActivity->text();
-    d.keyLocation  = keyLocation->text();
-    d.keyAlias     = keyAlias->text();
-    d.keyStorePass = keyStorePass->text();
-    d.keyPass      = keyPass->text();
-    saveSystem_.save(name, d);
-    emit profileChanged(d);
+    AppProfileData data = store_->load(name);
+    data.build.projectDir   = projectDir->text();
+    data.build.outputDir    = outputDir->text();
+    data.build.package_     = package_->text();
+    data.build.mainActivity = mainActivity->text();
+    data.build.keyLocation  = keyLocation->text();
+    data.build.keyAlias     = keyAlias->text();
+    data.build.keyStorePass = keyStorePass->text();
+    data.build.keyPass      = keyPass->text();
+    store_->save(name, data);
+    emit profileChanged(data.build);
     QMessageBox::information(this, "Build", QString("Profile \"%1\" saved.").arg(name));
 }
 
@@ -231,17 +226,18 @@ void BuildTab::onRenameProfile() {
         this, "Rename Profile", "New name:", QLineEdit::Normal, current, &ok);
     newName = newName.trimmed();
     if (!ok || newName.isEmpty() || newName == current) return;
-    if (saveSystem_.exists(newName)) {
+    if (store_->exists(newName)) {
         QMessageBox::warning(this, "Rename", "A profile with that name already exists.");
         return;
     }
-    saveSystem_.rename(current, newName);
+    store_->rename(current, newName);
     profileCombo->setItemText(profileCombo->currentIndex(), newName);
+    emit profileListChanged();
 }
 
 void BuildTab::onProfileChanged(const QString &name) {
-    if (!name.isEmpty())
-        loadProfileIntoForm(name);
+    if (name.isEmpty()) return;
+    loadProfileIntoForm(name);
 }
 
 void BuildTab::startBuild(const QString &type) {

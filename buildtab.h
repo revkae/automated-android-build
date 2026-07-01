@@ -1,5 +1,5 @@
 #pragma once
-#include "savedata.h"
+#include "app_profile.h"
 #include "profilestore.h"
 #include <QWidget>
 #include <QProcess>
@@ -10,11 +10,15 @@
 class BuildTab : public QWidget {
     Q_OBJECT
 public:
-    explicit BuildTab(QWidget *parent = nullptr);
+    explicit BuildTab(ProfileStore<AppProfileData> *store, QWidget *parent = nullptr);
     void syncProfile();
 
 signals:
     void profileChanged(const SaveData &data);
+    void profileListChanged();
+
+public slots:
+    void refreshProfileList();
 
 private slots:
     void onNewProfile();
@@ -32,7 +36,7 @@ private:
     void    autoFillFromManifest(const QString &dir);
     QString nextProfileName() const;
 
-    ProfileStore<SaveData> saveSystem_;
+    ProfileStore<AppProfileData> *store_;
     QComboBox  *profileCombo;
     QProcess   *process;
     QTextEdit  *logOutput;

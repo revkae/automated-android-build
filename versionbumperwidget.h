@@ -1,5 +1,5 @@
 #pragma once
-#include "vb_data.h"
+#include "app_profile.h"
 #include "profilestore.h"
 
 #include <QWidget>
@@ -13,7 +13,13 @@ class VersionBumperWidget : public QWidget {
     Q_OBJECT
 
 public:
-    explicit VersionBumperWidget(QWidget *parent = nullptr);
+    explicit VersionBumperWidget(ProfileStore<AppProfileData> *store, QWidget *parent = nullptr);
+
+signals:
+    void profileListChanged();
+
+public slots:
+    void refreshProfileList();
 
 private slots:
     void onNewProfile();
@@ -35,8 +41,8 @@ private:
     QLabel       *newVersionLabel;
     QLabel       *currentCodeLabel;
 
-    QList<FileEntryData>        entries_;
-    ProfileStore<VBProfileData> saveSystem_;
+    QList<FileEntryData>         entries_;
+    ProfileStore<AppProfileData> *store_;
 
     QString doApply();
     void    loadProfile(const VBProfileData &data);

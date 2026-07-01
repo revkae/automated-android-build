@@ -18,9 +18,6 @@
 #include <QSignalBlocker>
 #include <QProcess>
 #include <QFileInfo>
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QJsonObject>
 
 static const QRegularExpression kVerRe(R"((\d+)\.(\d+)(?:\.(\d+))?)");
 
@@ -52,33 +49,9 @@ static QString applyBump(const QString &version, int segment) {
     return QString("%1.%2").arg(major).arg(minor);
 }
 
-VersionBumperWidget::VersionBumperWidget(QWidget *parent)
+VersionBumperWidget::VersionBumperWidget(ProfileStore<AppProfileData> *store, QWidget *parent)
     : QWidget(parent)
-    , saveSystem_("vb",
-        [](const VBProfileData &d) -> QJsonObject {
-            QJsonArray files;
-            for (const auto &f : d.files) {
-                QJsonObject o;
-                o["path"] = f.path;
-                o["occurrences"] = f.occurrences;
-                files.append(o);
-            }
-            QJsonObject root;
-            root["files"] = files;
-            root["segment"] = d.segment;
-            root["newVersionCode"] = d.newVersionCode;
-            return root;
-        },
-        [](const QJsonObject &o) -> VBProfileData {
-            VBProfileData d;
-            d.segment = o["segment"].toInt(1);
-            d.newVersionCode = o["newVersionCode"].toInt(0);
-            for (const auto &v : o["files"].toArray()) {
-                QJsonObject f = v.toObject();
-                d.files.append({f["path"].toString(), f["occurrences"].toInt(1)});
-            }
-            return d;
-        })
+    , store_(store)
 {
     auto *layout = new QVBoxLayout(this);
     layout->setSpacing(10);
@@ -148,11 +121,11 @@ VersionBumperWidget::VersionBumperWidget(QWidget *parent)
     // Populate profile combo
     {
         QSignalBlocker b(profileCombo);
-        for (const QString &name : saveSystem_.profileNames())
+        for (const QString &name : store_->profileNames())
             profileCombo->addItem(name);
     }
     if (profileCombo->count() > 0)
-        loadProfile(saveSystem_.load(profileCombo->currentText()));
+        loadProfile(store_->load(profileCombo->currentText()).vb);
 
     connect(newProfileBtn,    &QPushButton::clicked, this, &VersionBumperWidget::onNewProfile);
     connect(renameProfileBtn, &QPushButton::clicked, this, &VersionBumperWidget::onRenameProfile);
@@ -168,14 +141,17 @@ VersionBumperWidget::VersionBumperWidget(QWidget *parent)
 void VersionBumperWidget::onNewProfile() {
     QString name = QInputDialog::getText(this, "New Profile", "Profile name:");
     if (name.isEmpty()) return;
-    if (saveSystem_.exists(name)) {
+    if (store_->exists(name)) {
         QMessageBox::warning(this, "Version Bumper", "A profile with that name already exists.");
         return;
     }
-    saveSystem_.save(name, {});
+    store_->save(name, AppProfileData{});
     profileCombo->addItem(name);
-    QSignalBlocker b(profileCombo);
-    profileCombo->setCurrentText(name);
+    {
+        QSignalBlocker b(profileCombo);
+        profileCombo->setCurrentText(name);
+    }
+    emit profileListChanged();
 }
 
 void VersionBumperWidget::onRenameProfile() {
@@ -183,16 +159,17 @@ void VersionBumperWidget::onRenameProfile() {
     if (current.isEmpty()) return;
     QString newName = QInputDialog::getText(this, "Rename Profile", "New name:", QLineEdit::Normal, current);
     if (newName.isEmpty() || newName == current) return;
-    if (saveSystem_.exists(newName)) {
+    if (store_->exists(newName)) {
         QMessageBox::warning(this, "Version Bumper", "A profile with that name already exists.");
         return;
     }
-    saveSystem_.rename(current, newName);
+    store_->rename(current, newName);
     int idx = profileCombo->currentIndex();
     {
         QSignalBlocker b(profileCombo);
         profileCombo->setItemText(idx, newName);
     }
+    emit profileListChanged();
 }
 
 void VersionBumperWidget::onSaveProfile() {
@@ -201,17 +178,27 @@ void VersionBumperWidget::onSaveProfile() {
         onNewProfile();
         return;
     }
-    VBProfileData data;
-    data.segment        = segmentSpin->value();
-    data.newVersionCode = newCodeSpin->value();
-    data.files          = entries_;
-    saveSystem_.save(name, data);
+    AppProfileData data = store_->load(name);
+    data.vb.segment        = segmentSpin->value();
+    data.vb.newVersionCode = newCodeSpin->value();
+    data.vb.files          = entries_;
+    store_->save(name, data);
     QMessageBox::information(this, "Version Bumper", QString("Profile \"%1\" saved.").arg(name));
 }
 
 void VersionBumperWidget::onProfileChanged(const QString &name) {
     if (name.isEmpty()) return;
-    loadProfile(saveSystem_.load(name));
+    loadProfile(store_->load(name).vb);
+}
+
+void VersionBumperWidget::refreshProfileList() {
+    QSignalBlocker blocker(profileCombo);
+    QString current = profileCombo->currentText();
+    profileCombo->clear();
+    for (const QString &name : store_->profileNames())
+        profileCombo->addItem(name);
+    if (profileCombo->findText(current) >= 0)
+        profileCombo->setCurrentText(current);
 }
 
 void VersionBumperWidget::onAddFile() {
