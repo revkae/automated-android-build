@@ -15,7 +15,6 @@ endif()
 add_executable(AndroidBuildTool
     main.cpp
     mainwindow.cpp
-    savesystem.cpp
     versionbumperwidget.cpp
     buildtab.cpp
     githubactionstab.cpp
