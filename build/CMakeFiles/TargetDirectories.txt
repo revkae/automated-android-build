@@ -1,5 +1,0 @@
-/Users/ravan/Documents/bash/automated-android-build/build/CMakeFiles/AndroidBuildTool.dir
-/Users/ravan/Documents/bash/automated-android-build/build/CMakeFiles/edit_cache.dir
-/Users/ravan/Documents/bash/automated-android-build/build/CMakeFiles/rebuild_cache.dir
-/Users/ravan/Documents/bash/automated-android-build/build/CMakeFiles/AndroidBuildTool_autogen_timestamp_deps.dir
-/Users/ravan/Documents/bash/automated-android-build/build/CMakeFiles/AndroidBuildTool_autogen.dir
