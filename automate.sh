@@ -25,6 +25,27 @@ cd "$PROJECT_DIR"
 
 BUILD_TYPE="${1:-debug}"
 
+if [ "$BUILD_TYPE" = "bundle" ]; then
+    print_blue "→ Building release AAB..."
+    ./gradlew bundleRelease || { print_red "✗ Gradle bundle build failed"; exit 1; }
+
+    mkdir -p "$OUTPUT_DIR"
+
+    BUNDLE_PATH="app/build/outputs/bundle/release/app-release.aab"
+
+    # Sign the AAB (jarsigner, not apksigner — apksigner doesn't sign .aab files)
+    jarsigner -verbose \
+        -sigalg SHA256withRSA -digestalg SHA-256 \
+        -keystore "$KEY_LOCATION" \
+        -storepass "$KEY_STORE_PASS" \
+        -keypass "$KEY_PASS" \
+        -signedjar "$OUTPUT_DIR/app-release-signed.aab" \
+        "$BUNDLE_PATH" \
+        "$KEY_ALIAS"
+
+    print_green "✓ Signed AAB saved to $OUTPUT_DIR"
+fi
+
 if [ "$BUILD_TYPE" = "release" ]; then
     print_blue "→ Building release APK..."
     ./gradlew assembleRelease
