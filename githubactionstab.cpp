@@ -6,6 +6,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QFont>
+#include <QProcess>
 
 GitHubActionsTab::GitHubActionsTab(QWidget *parent) : QWidget(parent) {
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -78,6 +79,9 @@ jobs:
 
       - name: Build release APK
         run: ./gradlew assembleRelease
+
+      - name: Build release AAB
+        run: ./gradlew bundleRelease
 )";
 
     if (signingCheck_->isChecked()) {
@@ -101,6 +105,17 @@ jobs:
             --key-pass pass:${{ secrets.KEY_PASS }} \
             --out app/build/outputs/apk/release/app-release-signed.apk \
             app/build/outputs/apk/release/app-release-unsigned.apk
+
+      - name: Sign AAB
+        run: |
+          jarsigner -verbose \
+            -sigalg SHA256withRSA -digestalg SHA-256 \
+            -keystore keystore.jks \
+            -storepass ${{ secrets.KEY_STORE_PASS }} \
+            -keypass ${{ secrets.KEY_PASS }} \
+            -signedjar app/build/outputs/bundle/release/app-release-signed.aab \
+            app/build/outputs/bundle/release/app-release.aab \
+            )" + alias + R"(
 )";
     }
 
@@ -110,6 +125,12 @@ jobs:
         with:
           name: app-release
           path: app/build/outputs/apk/release/*.apk
+
+      - name: Upload AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-aab
+          path: app/build/outputs/bundle/release/app-release.aab
 )";
 
     return yaml;
@@ -141,6 +162,26 @@ void GitHubActionsTab::onExport() {
     out << buildYaml();
     file.close();
 
+    QString relPath = ".github/workflows/android.yml";
+
+    QProcess gitAdd;
+    gitAdd.setProcessChannelMode(QProcess::MergedChannels);
+    gitAdd.start("git", {"-C", currentProfile_.projectDir, "add", relPath});
+    if (!gitAdd.waitForFinished(10000) || gitAdd.exitCode() != 0) {
+        QMessageBox::warning(this, "Export",
+            "Workflow written but git add failed:\n" + QString::fromUtf8(gitAdd.readAll()));
+        return;
+    }
+
+    QProcess gitCommit;
+    gitCommit.setProcessChannelMode(QProcess::MergedChannels);
+    gitCommit.start("git", {"-C", currentProfile_.projectDir, "commit", "-m", "update GitHub Actions workflow"});
+    if (!gitCommit.waitForFinished(10000) || gitCommit.exitCode() != 0) {
+        QMessageBox::warning(this, "Export",
+            "Workflow written but git commit failed:\n" + QString::fromUtf8(gitCommit.readAll()));
+        return;
+    }
+
     QMessageBox::information(this, "Export",
-        "Workflow exported to:\n" + filePath);
+        "Workflow exported and committed:\n" + filePath);
 }
