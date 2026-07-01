@@ -1,5 +1,6 @@
 #pragma once
-#include "vb_savesystem.h"
+#include "vb_data.h"
+#include "profilestore.h"
 
 #include <QWidget>
 
@@ -34,8 +35,8 @@ private:
     QLabel       *newVersionLabel;
     QLabel       *currentCodeLabel;
 
-    QList<FileEntryData> entries_;
-    VBSaveSystem         saveSystem_;
+    QList<FileEntryData>        entries_;
+    ProfileStore<VBProfileData> saveSystem_;
 
     QString doApply();
     void    loadProfile(const VBProfileData &data);

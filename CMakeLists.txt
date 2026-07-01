@@ -16,7 +16,6 @@ add_executable(AndroidBuildTool
     main.cpp
     mainwindow.cpp
     savesystem.cpp
-    vb_savesystem.cpp
     versionbumperwidget.cpp
     githubactionstab.cpp
 )

@@ -18,6 +18,9 @@
 #include <QSignalBlocker>
 #include <QProcess>
 #include <QFileInfo>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 static const QRegularExpression kVerRe(R"((\d+)\.(\d+)(?:\.(\d+))?)");
 
@@ -49,7 +52,34 @@ static QString applyBump(const QString &version, int segment) {
     return QString("%1.%2").arg(major).arg(minor);
 }
 
-VersionBumperWidget::VersionBumperWidget(QWidget *parent) : QWidget(parent) {
+VersionBumperWidget::VersionBumperWidget(QWidget *parent)
+    : QWidget(parent)
+    , saveSystem_("vb",
+        [](const VBProfileData &d) -> QJsonObject {
+            QJsonArray files;
+            for (const auto &f : d.files) {
+                QJsonObject o;
+                o["path"] = f.path;
+                o["occurrences"] = f.occurrences;
+                files.append(o);
+            }
+            QJsonObject root;
+            root["files"] = files;
+            root["segment"] = d.segment;
+            root["newVersionCode"] = d.newVersionCode;
+            return root;
+        },
+        [](const QJsonObject &o) -> VBProfileData {
+            VBProfileData d;
+            d.segment = o["segment"].toInt(1);
+            d.newVersionCode = o["newVersionCode"].toInt(0);
+            for (const auto &v : o["files"].toArray()) {
+                QJsonObject f = v.toObject();
+                d.files.append({f["path"].toString(), f["occurrences"].toInt(1)});
+            }
+            return d;
+        })
+{
     auto *layout = new QVBoxLayout(this);
     layout->setSpacing(10);
     layout->setContentsMargins(12, 12, 12, 12);
