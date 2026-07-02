@@ -10,9 +10,10 @@ find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
 if(APPLE)
   execute_process(COMMAND xcrun --show-sdk-path OUTPUT_VARIABLE MACOS_SDK_PATH OUTPUT_STRIP_TRAILING_WHITESPACE)
   include_directories(SYSTEM "${MACOS_SDK_PATH}/usr/include/c++/v1")
+  set(MACOS_BUNDLE_FLAG MACOSX_BUNDLE)
 endif()
 
-add_executable(AndroidBuildTool
+add_executable(AndroidBuildTool ${MACOS_BUNDLE_FLAG}
     main.cpp
     mainwindow.cpp
     versionbumperwidget.cpp
