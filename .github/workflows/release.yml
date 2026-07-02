@@ -17,7 +17,7 @@ jobs:
           version: '6.7.3'
           host: linux
           target: desktop
-          arch: gcc_64
+          arch: linux_gcc_64
           cache: true
 
       - name: Install build tools
@@ -48,7 +48,7 @@ jobs:
           version: '6.7.3'
           host: windows
           target: desktop
-          arch: win64_msvc2022_64
+          arch: win64_msvc2019_64
           cache: true
 
       - name: Set up MSVC
