@@ -66,9 +66,11 @@ VersionBumperWidget::VersionBumperWidget(ProfileStore<AppProfileData> *store, QW
     auto *newProfileBtn    = new QPushButton("New Profile");
     auto *renameProfileBtn = new QPushButton("Rename");
     auto *saveProfileBtn   = new QPushButton("Save Profile");
+    auto *deleteProfileBtn = new QPushButton("Delete");
     profileBar->addWidget(newProfileBtn);
     profileBar->addWidget(renameProfileBtn);
     profileBar->addWidget(saveProfileBtn);
+    profileBar->addWidget(deleteProfileBtn);
     layout->addLayout(profileBar);
 
     // File table
@@ -130,6 +132,7 @@ VersionBumperWidget::VersionBumperWidget(ProfileStore<AppProfileData> *store, QW
     connect(newProfileBtn,    &QPushButton::clicked, this, &VersionBumperWidget::onNewProfile);
     connect(renameProfileBtn, &QPushButton::clicked, this, &VersionBumperWidget::onRenameProfile);
     connect(saveProfileBtn,   &QPushButton::clicked, this, &VersionBumperWidget::onSaveProfile);
+    connect(deleteProfileBtn, &QPushButton::clicked, this, &VersionBumperWidget::onDeleteProfile);
     connect(profileCombo, &QComboBox::currentTextChanged, this, &VersionBumperWidget::onProfileChanged);
     connect(addBtn,    &QPushButton::clicked, this, &VersionBumperWidget::onAddFile);
     connect(removeBtn, &QPushButton::clicked, this, &VersionBumperWidget::onRemove);
@@ -172,6 +175,25 @@ void VersionBumperWidget::onRenameProfile() {
     emit profileListChanged();
 }
 
+void VersionBumperWidget::onDeleteProfile() {
+    QString name = profileCombo->currentText();
+    if (name.isEmpty()) return;
+    auto btn = QMessageBox::question(this, "Delete Profile",
+        QString("Delete profile \"%1\"?").arg(name));
+    if (btn != QMessageBox::Yes) return;
+    store_->remove(name);
+    int idx = profileCombo->currentIndex();
+    {
+        QSignalBlocker b(profileCombo);
+        profileCombo->removeItem(idx);
+    }
+    if (profileCombo->count() > 0)
+        loadProfile(store_->load(profileCombo->currentText()).vb);
+    else
+        loadProfile({});
+    emit profileListChanged();
+}
+
 void VersionBumperWidget::onSaveProfile() {
     QString name = profileCombo->currentText();
     if (name.isEmpty()) {
@@ -206,7 +228,21 @@ void VersionBumperWidget::onAddFile() {
     if (path.isEmpty()) return;
 
     bool wasEmpty = entries_.isEmpty();
-    addFileRow(path, 1);
+
+    int occurrences = 1;
+    {
+        QFile f(path);
+        if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QString content = QString::fromUtf8(f.readAll());
+            QString ver = detectVersionInContent(content);
+            if (!ver.isEmpty()) {
+                int count = content.count(ver);
+                if (count > 0) occurrences = count;
+            }
+        }
+    }
+
+    addFileRow(path, occurrences);
 
     if (wasEmpty) {
         int code = detectVersionCode(path);
@@ -294,6 +330,31 @@ void VersionBumperWidget::onApplyWithAutomation() {
     QString tag     = "v" + newVer;
     QString workDir = QFileInfo(entries_.first().path).absolutePath();
 
+    // Stage all modified version files
+    QStringList addArgs = {"-C", workDir, "add"};
+    for (const auto &entry : entries_)
+        addArgs << entry.path;
+
+    QProcess gitAdd;
+    gitAdd.setProcessChannelMode(QProcess::MergedChannels);
+    gitAdd.start("git", addArgs);
+    if (!gitAdd.waitForFinished(10000) || gitAdd.exitCode() != 0) {
+        QMessageBox::warning(this, "Version Bumper",
+            QString("git add failed:\n%1").arg(QString::fromUtf8(gitAdd.readAll())));
+        return;
+    }
+
+    // Commit the version bump before tagging
+    QProcess gitCommit;
+    gitCommit.setProcessChannelMode(QProcess::MergedChannels);
+    gitCommit.start("git", {"-C", workDir, "commit", "-m", "Bump version to " + tag});
+    if (!gitCommit.waitForFinished(10000) || gitCommit.exitCode() != 0) {
+        QMessageBox::warning(this, "Version Bumper",
+            QString("git commit failed:\n%1").arg(QString::fromUtf8(gitCommit.readAll())));
+        return;
+    }
+
+    // Tag the commit that contains the version bump
     QProcess gitTag;
     gitTag.setProcessChannelMode(QProcess::MergedChannels);
     gitTag.start("git", {"-C", workDir, "tag", tag});
@@ -303,12 +364,13 @@ void VersionBumperWidget::onApplyWithAutomation() {
         return;
     }
 
+    // Push the commit and the tag together
     QProcess gitPush;
     gitPush.setProcessChannelMode(QProcess::MergedChannels);
-    gitPush.start("git", {"-C", workDir, "push", "origin", tag});
+    gitPush.start("git", {"-C", workDir, "push", "origin", "HEAD", tag});
     if (!gitPush.waitForFinished(30000) || gitPush.exitCode() != 0) {
         QMessageBox::warning(this, "Version Bumper",
-            QString("git push %1 failed:\n%2").arg(tag, QString::fromUtf8(gitPush.readAll())));
+            QString("git push failed:\n%1").arg(QString::fromUtf8(gitPush.readAll())));
         return;
     }
 

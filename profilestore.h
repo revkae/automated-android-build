@@ -38,6 +38,11 @@ public:
         writeToDisk();
     }
 
+    void remove(const QString &name) {
+        profiles_.remove(name);
+        writeToDisk();
+    }
+
     bool exists(const QString &name) const {
         return profiles_.contains(name);
     }

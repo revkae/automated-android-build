@@ -3,7 +3,9 @@
 #include <QWidget>
 #include <QTextEdit>
 #include <QCheckBox>
+#include <QComboBox>
 #include <QLabel>
+#include <QLineEdit>
 
 class GitHubActionsTab : public QWidget {
     Q_OBJECT
@@ -21,5 +23,11 @@ private:
     SaveData   currentProfile_;
     QTextEdit *preview_;
     QCheckBox *signingCheck_;
+    QCheckBox *playDeployCheck_;
+    QComboBox *trackCombo_;
     QLabel    *secretsNotice_;
+    QComboBox *triggerCombo_;
+    QLineEdit *branchEdit_;
+    QComboBox *javaVersionCombo_;
+    QLineEdit *filenameEdit_;
 };

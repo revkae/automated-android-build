@@ -36,9 +36,11 @@ BuildTab::BuildTab(ProfileStore<AppProfileData> *store, QWidget *parent)
     QPushButton *newProfileBtn    = new QPushButton("New Profile",  this);
     QPushButton *renameProfileBtn = new QPushButton("Rename",       this);
     QPushButton *saveProfileBtn   = new QPushButton("Save Profile", this);
+    QPushButton *deleteProfileBtn = new QPushButton("Delete",       this);
     profileBar->addWidget(newProfileBtn);
     profileBar->addWidget(renameProfileBtn);
     profileBar->addWidget(saveProfileBtn);
+    profileBar->addWidget(deleteProfileBtn);
 
     QFormLayout *form = new QFormLayout();
     projectDir   = new QLineEdit(this);
@@ -133,6 +135,7 @@ BuildTab::BuildTab(ProfileStore<AppProfileData> *store, QWidget *parent)
     connect(newProfileBtn,    &QPushButton::clicked,          this, &BuildTab::onNewProfile);
     connect(renameProfileBtn, &QPushButton::clicked,          this, &BuildTab::onRenameProfile);
     connect(saveProfileBtn,   &QPushButton::clicked,          this, &BuildTab::onSaveProfile);
+    connect(deleteProfileBtn, &QPushButton::clicked,          this, &BuildTab::onDeleteProfile);
     connect(debugBtn,         &QPushButton::clicked,          this, &BuildTab::onBuildDebug);
     connect(releaseBtn,       &QPushButton::clicked,          this, &BuildTab::onBuildRelease);
     connect(process, &QProcess::readyReadStandardOutput,      this, &BuildTab::onOutputReady);
@@ -232,6 +235,23 @@ void BuildTab::onRenameProfile() {
     }
     store_->rename(current, newName);
     profileCombo->setItemText(profileCombo->currentIndex(), newName);
+    emit profileListChanged();
+}
+
+void BuildTab::onDeleteProfile() {
+    QString name = profileCombo->currentText();
+    if (name.isEmpty()) return;
+    auto btn = QMessageBox::question(this, "Delete Profile",
+        QString("Delete profile \"%1\"?").arg(name));
+    if (btn != QMessageBox::Yes) return;
+    store_->remove(name);
+    int idx = profileCombo->currentIndex();
+    {
+        QSignalBlocker b(profileCombo);
+        profileCombo->removeItem(idx);
+    }
+    if (profileCombo->count() > 0)
+        loadProfileIntoForm(profileCombo->currentText());
     emit profileListChanged();
 }
 

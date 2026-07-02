@@ -25,6 +25,7 @@ private slots:
     void onNewProfile();
     void onRenameProfile();
     void onSaveProfile();
+    void onDeleteProfile();
     void onProfileChanged(const QString &name);
     void onAddFile();
     void onRemove();
