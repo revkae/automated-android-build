@@ -325,7 +325,7 @@ void BuildTab::autoFillFromManifest(const QString &dir) {
             } else if (name == QLatin1String("intent-filter")) {
                 inIntentFilter = true;
             } else if (inIntentFilter && name == QLatin1String("action")) {
-                if (xml.attributes().value("http://schemas.android.com/apk/res/android", "name") == "android.intent.action.MAIN")
+                if (xml.attributes().value("http://schemas.android.com/apk/res/android", "name") == QLatin1String("android.intent.action.MAIN"))
                     hasMainAction = true;
             }
         } else if (xml.isEndElement()) {
